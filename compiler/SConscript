@@ -1,0 +1,18 @@
+Import('env')
+
+target = 'compiler'
+
+compiler_env = env.Clone()
+compiler_env.Append(CPPPATH=['include'])
+
+# Get source files
+source_dirs = [
+
+]
+sources = Glob('src/*.c')
+for dir in source_dirs:
+    sources += Glob(f'{dir}/*.c')
+
+
+executable = compiler_env.Program(target=target, source=sources)
+Return('executable')
