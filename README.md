@@ -1,4 +1,6 @@
 # RageLang
 Language tools for the Rage programming language!
 
-<img src='assets/logo.webp' alt='logo' width='200'/>
+<div style='display: flex; flex-direction: row; width: 100%; justify-content: center;'>
+    <img src='assets/logo.webp' alt='logo' width='450'/>
+</div>
