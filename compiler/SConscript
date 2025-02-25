@@ -1,9 +1,13 @@
 Import('env')
+Import('system')
 
 target = 'compiler'
 
 compiler_env = env.Clone()
 compiler_env.Append(CPPPATH=['include'])
+
+if system == 'win32':
+    compiler_env['PDB'] = '${TARGET.dir}/${TARGET}.base.pdb'
 
 # Get source files
 source_dirs = [
@@ -13,6 +17,7 @@ sources = Glob('src/*.c')
 for dir in source_dirs:
     sources += Glob(f'{dir}/*.c')
 
+compiler_env['CCCOMSTR'] = "Compiling $SOURCE" # custom compiler printing string
 
 executable = compiler_env.Program(target=target, source=sources)
 Return('executable')

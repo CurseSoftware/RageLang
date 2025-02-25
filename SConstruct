@@ -1,3 +1,5 @@
+import os
+
 env = Environment()
 
 mode = ARGUMENTS.get('mode', 'debug')
@@ -21,6 +23,8 @@ else:
 COMPILER_FLAGS = []
 BUILD_DIR = 'build'
 system = env['PLATFORM']
+
+print("Detected compiler:", os.environ.get("CC", "Not set"))
 
 # Get compiler flags based on the OS
 if system == 'Linux':
@@ -49,10 +53,11 @@ if system == 'Linux':
         COMPILER_FLAGS.extend([
             '-O3'
         ])
-elif system == 'Windows':
+elif system == 'win32':
     print('Windows Systmem Detected')
     # Check for msvc compiler and use appropriate flags for debug and release
-    is_msvc = env['CXX'] == 'cl'
+    # is_msvc = env['CXX'] == 'cl'
+    is_msvc = 'msvc' in env['TOOLS']
     if is_msvc:
         print('MSVC compiler used')
 
@@ -115,6 +120,9 @@ elif system == 'Darwin':
 else:
     print(f'Unsupported build platform: [{system}]')
 
+for flag in COMPILER_FLAGS:
+    print(f'FLAG: [{flag}]')
+
 env.Append(CCFLAGS=COMPILER_FLAGS)
 
-build_target = SConscript(f'{target}/SConscript', exports={'env': env}, variant_dir=f'{BUILD_DIR}/{target}', duplicate=0)
+build_target = SConscript(f'{target}/SConscript', exports={'env': env, 'system': system}, variant_dir=f'{BUILD_DIR}/{target}', duplicate=0)
