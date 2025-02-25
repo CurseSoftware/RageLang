@@ -1,4 +1,4 @@
 # RageLang
 Language tools for the Rage programming language!
 
-![logo](assets/logo.webp)
+<img src='assets/logo.webp' alt='logo' width='200'/>
